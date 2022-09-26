@@ -89,7 +89,7 @@ namespace csharp_gestore_eventi
         //overdiver to string
         public override string? ToString()
         {
-            return $"{Date.ToString("dd/MM/yyyy")} - {Title}";
+            return String.Format("  {0} - {1} | Posti Disponibili: {2,5} | Posti Prenotati {3,5}", Date.ToString("dd/MM/yyyy"), Title, EmptySeats, ReservedSeats);
         }
 
     }

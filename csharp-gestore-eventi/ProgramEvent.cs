@@ -36,20 +36,20 @@ namespace csharp_gestore_eventi
 
         public List<Event> EventsAvailable(DateTime date)
         {
-            return _events.FindAll(vnt => vnt.Date > DateTime.Now);
+            return _events.FindAll(vnt => vnt.Date > date);
         }
 
-        public string PrintTour()
+        public string infoTour()
         {
-            return $"{Title} /n" + PrintEvent(_events) ;
+            return $"{Title}\n" + infoFilterTour(_events) ;
         }
 
-        static string PrintEvent(List<Event> ListEvent)
+        static string infoFilterTour(List<Event> ListEvent)
         {
             string str = "";
             foreach(Event e in ListEvent)
             {
-                str += e.ToString()+"/n";
+                str += e.ToString()+"\n";
             }
             if(str.Length > 0){
                 return str;
