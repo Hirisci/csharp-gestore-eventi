@@ -16,7 +16,18 @@ namespace csharp_gestore_eventi
     public class ProgramEvent
     {
         private List<Event> _events;
-        public string Title { get; set; }
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set {
+                if (value is "" or null)
+                {
+                    throw new Exception("Impossibile impostare vuoto il campo");
+                }
+                _title = value;
+            }
+        }
         public int Count { get { return _events.Count; } }
         public ReadOnlyCollection<Event> Events { get; }
 
@@ -55,7 +66,7 @@ namespace csharp_gestore_eventi
                 return str;
             }
 
-            throw new Exception("Nessun evente presente nel Tour");
+            throw new Exception("Nessun evento presente nel Tour");
         }
 
 
