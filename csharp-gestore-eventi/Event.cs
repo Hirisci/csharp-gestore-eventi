@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace csharp_gestore_eventi
 {
-    internal class Event
+    public class Event
     {
         private string? _title;
         private DateTime _date;
-        private int _seatsMax;
+        private int _maxSeats;
         private int _reservedSeats;
         
         public string? Title
@@ -35,14 +35,14 @@ namespace csharp_gestore_eventi
                 _date = value;
             }
         }
-        public int SeatsMax { 
-            get => _seatsMax;  
+        public int MaxSeats { 
+            get => _maxSeats;  
             init {
                 if (value <= 0) { 
                     throw new Exception("Impossibile inserire un numero negativo");
                 } 
                 
-                _seatsMax = value;
+                _maxSeats = value;
             } 
         }
         public int ReservedSeats { 
@@ -51,10 +51,10 @@ namespace csharp_gestore_eventi
                 if (_date < DateTime.Now) { 
                     throw new Exception("Operazione impossibile, l'evento é gia passato");
                 } 
-                if (_reservedSeats + value > _seatsMax){
-                    throw new Exception($"Impossibile eseguire l'operazione, Sono disponibili solo {_seatsMax - _reservedSeats} posti ");
+                if ( value > _maxSeats){
+                    throw new Exception($"Impossibile eseguire l'operazione, Sono disponibili solo {EmptySeats} posti ");
                 }
-                if (_reservedSeats - value <= 0) { 
+                if ( value < 0) { 
                     throw new Exception($"Impossibile eseguire l'operazione, Posti riservati sono solo {_reservedSeats}");
                 }
 
@@ -62,14 +62,15 @@ namespace csharp_gestore_eventi
 
             } 
         }
+        public int EmptySeats { get => MaxSeats - ReservedSeats; }
         
         
-        //public int EmptySeats { get=>EmptySeats; private set=> EmptySeats=SeatsMax-ReservedSeats; }
-        public Event(string title, DateTime date, int seatsMax)
+        //public int EmptySeats { get=>EmptySeats; private set=> EmptySeats=MaxSeats-ReservedSeats; }
+        public Event(string? title, DateTime date, int seatsMax)
         {
             Title = title;
             Date = date;
-            SeatsMax = seatsMax;
+            MaxSeats = seatsMax;
             ReservedSeats = 0;
         }
 
@@ -85,15 +86,11 @@ namespace csharp_gestore_eventi
             ReservedSeats -= seats; 
         }
 
-
         //overdiver to string
         public override string? ToString()
         {
             return $"{Date.ToString("dd/MM/yyyy")} - {Title}";
         }
-
-
-
 
     }
 }
