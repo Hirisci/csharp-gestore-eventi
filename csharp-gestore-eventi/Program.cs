@@ -43,6 +43,44 @@ Event InfoEvent()
     return new Event(title, date, maxSeats);
 }
 
+Conference InfoConference()
+{
+    bool status = true;
+    string? title = String.Empty;
+    string? speaker = String.Empty;
+    double price = 0.00;
+    DateTime date = default;
+    int maxSeats = 0;
+
+    do
+    {
+        try
+        {
+            Console.WriteLine();
+            Console.Write("Iserisci il nome del evento: ");
+            title = Console.ReadLine();
+            Console.Write("Iserisci la data del evento (gg/mm/yyyy): ");
+            date = DateTime.Parse(Console.ReadLine());
+            Console.Write("Iserisci il nome del relatore del evento: ");
+            speaker = Console.ReadLine();
+            Console.Write("Iserisci il numero di posti totali: ");
+            maxSeats = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Iserisci il prezzo del biglietto: ");
+            price = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine();
+            status = false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            status = true;
+        }
+
+    } while (status);
+
+    return new Conference(title, date, maxSeats,speaker,price);
+}
+
 ProgramEvent CreateTour()
 {
     bool status = true;
@@ -76,11 +114,18 @@ void CreateTourEvent(ProgramEvent tour)
             Console.Write("indica il numero di eventi da inserire? ");
             int countEvent = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine();
-            
+
 
             for (int i = 0; i < countEvent; i++)
             {
-                tour.AddEvent(InfoEvent());
+                string choise = "asd";
+                do
+                {
+                    Console.Write("Vuoi inserire un evento o una conferenza: ");
+                    choise = Console.ReadLine();
+                } while (choise.ToLower() != "evento" && choise.ToLower() != "conferenza");
+                if (choise.ToLower() == "evento") { tour.AddEvent(InfoEvent()); } 
+                else { tour.AddEvent(InfoConference()); };
             }
         }
         catch (Exception e)

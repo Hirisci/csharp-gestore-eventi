@@ -41,6 +41,10 @@ namespace csharp_gestore_eventi
         public void AddEvent(Event newEvent){
             _events.Add(newEvent);
         }
+        public void AddEvent(Conference newEvent)
+        {
+            _events.Add(newEvent);
+        }
         public void ClearList() { 
             _events.Clear();
         } 
